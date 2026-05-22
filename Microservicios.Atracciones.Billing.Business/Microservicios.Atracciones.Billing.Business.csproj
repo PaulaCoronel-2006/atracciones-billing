@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Microservicios.Atracciones.Billing.Business</RootNamespace>
+    <AssemblyName>Microservicios.Atracciones.Billing.Business</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="QuestPDF" Version="2026.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microservicios.Atracciones.Billing.DataAccess\Microservicios.Atracciones.Billing.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>

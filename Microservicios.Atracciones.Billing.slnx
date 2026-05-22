@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="Microservicios.Atracciones.Billing.API/Microservicios.Atracciones.Billing.API.csproj" />
+    <Project Path="Microservicios.Atracciones.Billing.Business/Microservicios.Atracciones.Billing.Business.csproj" />
+    <Project Path="Microservicios.Atracciones.Billing.DataAccess/Microservicios.Atracciones.Billing.DataAccess.csproj" />
+    <Project Path="Microservicios.Atracciones.Billing.DataManagement/Microservicios.Atracciones.Billing.DataManagement.csproj" Id="f7e62b5b-a9d2-45d8-b9ec-7264719cc78a" />
+  </Folder>
+  <Folder Name="/test/" />
+</Solution>

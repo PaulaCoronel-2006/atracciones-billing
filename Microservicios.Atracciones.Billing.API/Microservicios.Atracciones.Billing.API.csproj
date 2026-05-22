@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Microservicios.Atracciones.Billing.API</RootNamespace>
+    <AssemblyName>Microservicios.Atracciones.Billing.API</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" Version="10.0.0" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="10.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.8" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microservicios.Atracciones.Billing.Business\Microservicios.Atracciones.Billing.Business.csproj" />
+    <ProjectReference Include="..\Microservicios.Atracciones.Billing.DataAccess\Microservicios.Atracciones.Billing.DataAccess.csproj" />
+    <ProjectReference Include="..\Microservicios.Atracciones.Billing.DataManagement\Microservicios.Atracciones.Billing.DataManagement.csproj" />
+  </ItemGroup>
+
+</Project>

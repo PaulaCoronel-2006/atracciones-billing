@@ -1,0 +1,6 @@
+@Microservicios.Atracciones.Billing.API_HostAddress = http://localhost:5246
+
+GET {{Microservicios.Atracciones.Billing.API_HostAddress}}/api/v1/billing/my-invoices
+Accept: application/json
+
+###
