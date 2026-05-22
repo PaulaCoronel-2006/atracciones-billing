@@ -18,11 +18,14 @@ builder.Services.AddBusinessServices();
 builder.Services.AddDataManagementServices();
 
 // 2. CONFIGURACIÓN API & CORS
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-    });
+builder.Services.AddControllers(options =>
+{
+    options.Conventions.Add(new RoutePrefixConvention());
+})
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+});
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -77,3 +80,24 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public class RoutePrefixConvention : Microsoft.AspNetCore.Mvc.ApplicationModels.IApplicationModelConvention
+{
+    public void Apply(Microsoft.AspNetCore.Mvc.ApplicationModels.ApplicationModel application)
+    {
+        foreach (var controller in application.Controllers)
+        {
+            foreach (var selector in controller.Selectors)
+            {
+                if (selector.AttributeRouteModel != null)
+                {
+                    var currentTemplate = selector.AttributeRouteModel.Template;
+                    if (currentTemplate != null && currentTemplate.StartsWith("api/v1/"))
+                    {
+                        selector.AttributeRouteModel.Template = currentTemplate["api/v1/".Length..];
+                    }
+                }
+            }
+        }
+    }
+}
