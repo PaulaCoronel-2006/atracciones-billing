@@ -8,7 +8,7 @@ namespace Microservicios.Atracciones.Billing.API.Controllers.V1;
 
 [ApiController]
 [Route("api/v1/billing")]
-[Authorize(Roles = "Admin,Partner,Client")]
+[AllowAnonymous]
 public class BillingController : ControllerBase
 {
     private readonly IBillingService _billingService;
