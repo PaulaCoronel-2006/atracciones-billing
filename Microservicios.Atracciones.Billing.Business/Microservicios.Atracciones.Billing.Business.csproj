@@ -12,6 +12,7 @@
     <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="QuestPDF" Version="2026.5.0" />
+    <PackageReference Include="MassTransit" Version="8.3.6" />
   </ItemGroup>
 
   <ItemGroup>

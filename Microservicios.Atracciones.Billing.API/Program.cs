@@ -4,8 +4,20 @@ using System.Text;
 using Microservicios.Atracciones.Billing.DataAccess;
 using Microservicios.Atracciones.Billing.Business;
 using Microservicios.Atracciones.Billing.DataManagement;
+using MassTransit;
+using Serilog;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
+using Microservicios.Atracciones.Billing.Business.Consumers;
+
+// Configurar Serilog
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
 
 // Configurar licencia de QuestPDF
 QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
@@ -16,6 +28,39 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDataAccessServices(builder.Configuration);
 builder.Services.AddBusinessServices();
 builder.Services.AddDataManagementServices();
+
+// Configurar MassTransit con RabbitMQ y Registrar Consumidor
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<BookingCreatedConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        var rabbitHost = builder.Configuration["RabbitMQ:Host"] ?? "localhost";
+        var rabbitUser = builder.Configuration["RabbitMQ:Username"] ?? "guest";
+        var rabbitPass = builder.Configuration["RabbitMQ:Password"] ?? "guest";
+
+        cfg.Host(rabbitHost, "/", h =>
+        {
+            h.Username(rabbitUser);
+            h.Password(rabbitPass);
+        });
+
+        cfg.ReceiveEndpoint("booking-created-billing", e =>
+        {
+            e.ConfigureConsumer<BookingCreatedConsumer>(context);
+        });
+    });
+});
+
+// Configurar OpenTelemetry Tracing
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .AddSource("Microservicios.Atracciones.Billing")
+        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("BillingService"))
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddConsoleExporter());
 
 // 2. CONFIGURACIÓN API & CORS
 builder.Services.AddControllers(options =>

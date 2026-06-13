@@ -8,7 +8,7 @@ namespace Microservicios.Atracciones.Billing.API.Controllers.V1;
 
 [ApiController]
 [Route("api/v1/billing")]
-[AllowAnonymous]
+[Authorize]
 public class BillingController : ControllerBase
 {
     private readonly IBillingService _billingService;
@@ -19,6 +19,7 @@ public class BillingController : ControllerBase
     }
 
     [HttpGet("management")]
+    [Authorize(Roles = "Admin,Partner")]
     public async Task<ActionResult<PagedResult<InvoiceSummaryResponse>>> GetManagementInvoices([FromQuery] QueryFilters filters)
     {
         var result = await _billingService.GetManagementInvoicesAsync(filters);
@@ -26,6 +27,7 @@ public class BillingController : ControllerBase
     }
  
     [HttpGet("my-invoices")]
+    [Authorize(Roles = "Client,Admin")]
     public async Task<ActionResult<IEnumerable<InvoiceSummaryResponse>>> GetMyInvoices()
     {
         var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
@@ -37,6 +39,7 @@ public class BillingController : ControllerBase
     }
 
     [HttpGet("management/{id:guid}")]
+    [Authorize(Roles = "Admin,Partner")]
     public async Task<ActionResult<InvoiceFullResponse>> GetInvoiceDetail(Guid id)
     {
         var result = await _billingService.GetInvoiceByIdAsync(id);
@@ -59,6 +62,7 @@ public class BillingController : ControllerBase
     }
 
     [HttpPost("management/{id:guid}/void")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> VoidInvoice(Guid id)
     {
         var invoice = await _billingService.GetInvoiceByIdAsync(id);

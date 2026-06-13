@@ -7,7 +7,7 @@ namespace Microservicios.Atracciones.Billing.API.Controllers.V1;
 
 [ApiController]
 [Route("api/v1/payment")]
-[AllowAnonymous]
+[Authorize]
 public class PaymentController : ControllerBase
 {
     private readonly IPaymentService _paymentService;
