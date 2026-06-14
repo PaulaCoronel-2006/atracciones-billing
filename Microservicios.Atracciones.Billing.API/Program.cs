@@ -126,7 +126,7 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = string.Empty;
 });
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Omitido para evitar fallas de health check en balanceador de Render
 app.UseCors("AllowAll");
 
 app.UseAuthentication();
