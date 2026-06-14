@@ -39,7 +39,7 @@ builder.Services.AddMassTransit(x =>
         var rabbitUri = builder.Configuration["RabbitMQ:Uri"];
         if (!string.IsNullOrEmpty(rabbitUri))
         {
-            cfg.Host(new Uri(rabbitUri));
+            cfg.Host(new Uri(rabbitUri.Trim()));
         }
         else
         {
