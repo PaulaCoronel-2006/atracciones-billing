@@ -16,7 +16,7 @@ public class Invoice
     public Guid UserId { get; set; }
 
     [Required]
-    [MaxLength(20)]
+    [MaxLength(50)]
     public string InvoiceNumber { get; set; } = string.Empty;
 
     [Required]
