@@ -95,9 +95,9 @@ builder.Services.AddCors(options =>
 });
 
 // 4. JWT AUTHENTICATION
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "BillingService_Super_Secret_Key_2026";
-var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "BillingService";
-var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "BillingServiceUsers";
+var jwtKey = (builder.Configuration["Jwt:Key"] ?? "BillingService_Super_Secret_Key_2026").Trim();
+var jwtIssuer = (builder.Configuration["Jwt:Issuer"] ?? "BillingService").Trim();
+var jwtAudience = (builder.Configuration["Jwt:Audience"] ?? "BillingServiceUsers").Trim();
 
 Log.Information("JWT Configuration loaded - Issuer: {JwtIssuer}, Audience: {JwtAudience}", jwtIssuer, jwtAudience);
 
